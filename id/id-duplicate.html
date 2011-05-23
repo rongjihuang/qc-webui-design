@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="height:100%;">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>id重复的问题</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.1.min.js"></script></head>
+<body style="margin: 0px;background-color:#FEFEFE;height:100%;overflow:hidden;">
+<div style="border:0;background-color:gray;height:95%;width:95%;overflow:auto;">
+//knowledge: jquery以指定id查找元素时需注意事项：（测试版本jquery1.5.1）
+<p>1) 没有指定上下文的情况下，jquery默认使用document作为上下文，只会返回第一个id元素</p>
+<p>2) * 在非document上下文的情况下，会返回所有符合条件的id元素</p>
+
+	<div class="divID" style="border:1px solid black;padding:10px;margin:10px;">
+		<div id="divID" style="border:1px solid blue;float:left;margin:4px;">divID-1</div>
+		<div id="divID" style="border:1px solid blue;float:left;margin:4px;">divID-2</div>
+		<div style="clear:both;">jQuery("#divID").size()=<span class="info">?</span></div>
+		<div>jQuery("#buttonID",document).size()=<span class="info1">?</span></div>
+		<div>jQuery("#buttonID","body").size()=<span class="info2">?</span></div>
+	</div>
+
+	<div class="buttonID" style="border:1px solid black;padding:10px;margin:10px;">
+		<button id="buttonID">buttonID-1</button>
+		<button id="buttonID">buttonID-2</button>
+		<div>jQuery("#buttonID").size()=<span class="info">?</span></div>
+		<div>jQuery("#buttonID","body").size()=<span class="info1">?</span></div>
+	</div>
+
+	<div class="inputIDContext1" style="border:1px solid black;padding:10px;margin:10px;">
+		<input id="inputID" type="button" value="inputID-11"/>
+		<input id="inputID" type="button" value="inputID-12"/>
+		<div>jQuery("#inputID").size()=<span class="info">?</span></div>
+		<div>jQuery("#inputID",".inputIDContext1").size()=<span class="info1">?</span></div>
+	</div>
+
+	<div>
+	<div class="inputIDContext2" style="border:1px solid black;padding:10px;margin:10px;">
+		<input id="inputID" type="button" value="inputID-21"/>
+		<input id="inputID" type="button" value="inputID-22"/>
+		<div>jQuery("#inputID",".inputIDContext2").size()=<span class="info">?</span></div>
+		<div>jQuery("#inputID","body").size()=<span class="info1">?</span></div>
+		<div>jQuery(">div>div>#inputID","body").size()=<span class="info2">?</span></div>
+	</div>
+	</div>
+
+</div>
+<script type="text/javascript">
+jQuery(".divID span.info").text(jQuery("#divID").size() + " <-- " + combine(jQuery("#divID")));
+jQuery(".divID span.info1").text(jQuery("#divID",document).size() + " <-- " + combine(jQuery("#divID",document)));
+jQuery(".divID span.info2").text(jQuery("#divID","body").size() + " <-- " + combine(jQuery("#divID","body")));
+
+jQuery(".buttonID span.info").text(jQuery("#buttonID").size() + " <-- " + combine(jQuery("#buttonID")));
+jQuery(".buttonID span.info1").text(jQuery("#buttonID",".buttonID").size() + " <-- " + combine(jQuery("#buttonID",".buttonID")));
+
+jQuery(".inputID span.info").text(jQuery("#inputID").size() + " <-- " + combine(jQuery("#inputID"),true));
+
+jQuery(".inputIDContext1 span.info").text(jQuery("#inputID").size() + " <-- " + combine(jQuery("#inputID"),true));
+jQuery(".inputIDContext1 span.info1").text(jQuery("#inputID",".inputIDContext1").size() + " <-- " + combine(jQuery("#inputID",".inputIDContext1"),true));
+
+jQuery(".inputIDContext2 span.info").text(jQuery("#inputID",".inputIDContext2").size() + " <-- " + combine(jQuery("#inputID",".inputIDContext2"),true));
+jQuery(".inputIDContext2 span.info1").text(jQuery("#inputID","body").size() + " <-- " + combine(jQuery("#inputID","body"),true));
+jQuery(".inputIDContext2 span.info2").text(jQuery(">div>div>#inputID","body").size() + " <-- " + combine(jQuery(">div>div>#inputID","body"),true));
+
+function combine(array,isValue){
+	var t = "";
+	array.each(function(){t += (isValue ? this.value : this.innerText) + ", ";});
+	return t;
+}
+</script>
+</body>
+</html>
