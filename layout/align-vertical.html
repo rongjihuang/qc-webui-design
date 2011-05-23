@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="height:100%;">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>如何控制元素在容器中的垂直对齐方式(通过table)</title>
+<style type="text/css">
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 1em;
+}
+
+.container {
+	margin: 10px;
+	padding: 0px;
+	border: 10px solid #E78F08;
+}
+
+.hide {
+	display: none;
+}
+
+.ui-button {
+	position: relative;
+	display: inline-block;
+	outline: none;
+	border-radius: 0px;
+	border: 10px solid #CCC;
+	text-decoration: none !important;
+	padding: 10px;
+	margin: 0px; 
+	cursor : pointer;
+	zoom: 1;
+	overflow: visible;
+	background-color: black;
+	cursor: pointer;
+}
+
+.ui-icon {
+	background-color: green;
+	width: 20px;
+	height: 20px;
+	display: block;
+}
+
+.primary {
+	position: absolute;
+	left:10px;
+	top: 50%;
+	margin-top: -10px;
+}
+
+.secondary {
+	right: 10px;
+	position: absolute;
+	top: 50%;
+	margin-top: -10px;
+}
+
+.ui-button-text {
+	display: block;
+	padding: 10px 30px 10px 30px;
+	color: #1C94C4;
+	background-color: yellow;
+	/*line-height: 1.4;*/
+}
+
+.w {
+	display: block;
+	background-color: black;
+	width: 10px;
+	height: 10px;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		abc ABC 123 测试<span class="w"></span>
+	</div>
+	<div class="container">
+		<a class="ui-button">
+			<span class="ui-icon primary"></span><span class="ui-button-text">abc
+				ABC 123 测试</span><span class="ui-icon secondary"></span>
+		</a>
+		<a class="ui-button">
+			<span class="ui-icon primary"></span><span class="ui-button-text">abc
+				ABC 123 测试</span><span class="ui-icon secondary"></span>
+		</a>
+	</div>
+	<div class="container">
+		<h1>将固定高度尺寸的元素垂直居中到容器:</h1>
+		<p>容器设置position为absolute或relative，元素设置position:absolute、top:50%、margin-top:-[height/2](元素高度一半的负数)</p>
+		<hr />
+		<h1>绝对定位的元素，如设置"left:10px":</h1>
+		<p>Chrome(11.0.696.68)、Firefox(4.0)、Opera(11.10)、Safari(5.0.3)、IE(6~9)中，是相对于父元素的border内测的；如果不设置，则默认靠到padding的内测</p>
+		<hr />
+		<h1>关于position定位:(static、absolute、relative)</h1>
+		<p>static -- <b>非定位元素</b>，是浏览器的默认设置，即没有设置定位，top、right、left、bottom的设置会被忽略</p>
+		<p>absolute -- 绝对<b>定位元素</b>，其定位是相对于父定位元素，如果父元素为非定位元素，则相对于body定位</p>
+		<p>relative -- 相对<b>定位元素</b>，其定位是相对于dom的自然布局，top、left用于设置相对偏移量</p>
+		<hr />
+		<h1>关于display:(block、inline-block)</h1>
+		<p>div默认为block块元素，通过设置display为inline-block可强制其为内联块元素，但ie6、ie7除外。</p>
+		<p>block -- 块元素，外宽度默认为占满当前浏览器窗口，此元素前后会带有换行符。</p>
+		<p>inline -- 内联元素，其尺寸依赖于其内容的渲染，元素前后没有换行符。</p>
+		<p>inline-block -- 行内块元素（CSS2.1 新增的值），自身以inline方式渲染，但其内容以块方式渲染，与其邻近的元素将尽量渲染在同一行内</p>
+	</div>
+</body>
+</html>
